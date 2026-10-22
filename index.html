@@ -5,61 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Donsö Källarn</title>
   <meta name="description" content="Här finns flera verktyg som kan användas för aktiviteter på källarn.">
-  <meta name="theme-color" content="#e9fbfb" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#050708" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ebe6de" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    /* Liquid glass i turkos, vitt och svart */
+    /* Frostat glas, bläck och linne i ljuset från ett kyrkfönster.
+       Typsnitt: Fraunces och Caveat (SIL Open Font License). */
+    @font-face { font-family: "Fraunces"; src: url(fonts/fraunces.woff2) format("woff2"); font-weight: 300 900; font-display: swap; }
+    @font-face { font-family: "Caveat"; src: url(fonts/caveat.woff2) format("woff2"); font-weight: 400 700; font-display: swap; }
+
     :root {
-      --bg: #f2fbfb;
-      --text: #050708;
-      --muted: #3f5557;
-      --turq: #10c4c4;
-      --turq-deep: #079a9e;
-      --turq-soft: rgba(16, 196, 196, .14);
-      --glass: rgba(255, 255, 255, .55);
-      --glass-strong: rgba(255, 255, 255, .78);
-      --edge: rgba(255, 255, 255, .9);
-      --hairline: rgba(5, 7, 8, .08);
-      --shadow: 0 12px 40px rgba(0, 60, 64, .16), 0 2px 6px rgba(0, 40, 44, .08);
-      --shine: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -1px 0 rgba(255, 255, 255, .3);
-      --blob-1: #2ee6e0;
-      --blob-2: #8fb8ff;
-      --blob-3: #0aa5ad;
-      --blob-4: #a9b8ff;
-      --blob-5: #7ef0c0;
-      --blob-6: #c4b2ff;
-      --ocean: #2f7cf6;
-      --mint: #22c98b;
-      --violet: #7a5cff;
-      --ice: #3fb8f0;
-      --blur: blur(22px) saturate(170%);
+      --bg: #ebe6de;
+      --ink: #1d1b18;
+      --muted: #6f685e;
+      --accent: #7d6b54;
+      --accent-soft: rgba(125, 107, 84, .14);
+      --light: #ffffff;
+      --window: .7;
+      --glass: rgba(255, 253, 249, .5);
+      --edge: rgba(255, 255, 255, .85);
+      --line: rgba(29, 27, 24, .14);
+      --shadow: 0 30px 60px -30px rgba(40, 32, 22, .32);
+      --shine: inset 0 1px 0 rgba(255, 255, 255, .9);
+      --grain-opacity: .28;
+      --serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+      --ease: cubic-bezier(.2, .7, .15, 1);
       color-scheme: light;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #050708;
-        --text: #f4ffff;
-        --muted: #9db8ba;
-        --turq: #2ee6e0;
-        --turq-deep: #10c4c4;
-        --turq-soft: rgba(46, 230, 224, .14);
-        --glass: rgba(18, 26, 28, .55);
-        --glass-strong: rgba(14, 20, 22, .8);
-        --edge: rgba(255, 255, 255, .16);
-        --hairline: rgba(255, 255, 255, .08);
-        --shadow: 0 14px 44px rgba(0, 0, 0, .55);
-        --shine: inset 0 1px 0 rgba(255, 255, 255, .16), inset 0 -1px 0 rgba(255, 255, 255, .04);
-        --blob-1: #0aa5ad;
-        --blob-2: #1f4fb8;
-        --blob-3: #10c4c4;
-        --blob-4: #27318a;
-        --blob-5: #0f7a55;
-        --blob-6: #3f2a8a;
-        --ocean: #5b9bff;
-        --mint: #3ee8a4;
-        --violet: #a48cff;
-        --ice: #8fe0ff;
+        --bg: #141311;
+        --ink: #ece7df;
+        --muted: #a39b8e;
+        --accent: #c9b699;
+        --accent-soft: rgba(201, 182, 153, .14);
+        --light: #fff6e6;
+        --window: .06;
+        --glass: rgba(38, 36, 32, .55);
+        --edge: rgba(255, 255, 255, .12);
+        --line: rgba(236, 231, 223, .12);
+        --shadow: 0 30px 60px -30px rgba(0, 0, 0, .8);
+        --shine: inset 0 1px 0 rgba(255, 255, 255, .1);
+        --grain-opacity: .22;
+        --rim: .25;
         color-scheme: dark;
       }
     }
@@ -67,131 +57,160 @@
     * { box-sizing: border-box; }
     html { background: var(--bg); }
     body {
-      margin: 0; min-height: 100vh; color: var(--text);
-      font-family: -apple-system, "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      padding: calc(env(safe-area-inset-top) + 40px) max(16px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 40px) max(16px, env(safe-area-inset-left));
+      margin: 0; min-height: 100vh; color: var(--ink);
+      font: 400 1.0625rem/1.55 var(--serif);
+      font-variation-settings: "SOFT" 100, "WONK" 0, "opsz" 14;
+      -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+      padding: calc(env(safe-area-inset-top) + 9vh) max(22px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 48px) max(22px, env(safe-area-inset-left));
+      overflow-x: hidden;
     }
-    body::before {
-      content: ""; position: fixed; inset: -10%; z-index: -1; pointer-events: none;
-      background:
-        radial-gradient(36% 30% at 8% 6%, var(--blob-1), transparent 70%),
-        radial-gradient(32% 28% at 94% 12%, var(--blob-2), transparent 70%),
-        radial-gradient(40% 32% at 84% 84%, var(--blob-3), transparent 70%),
-        radial-gradient(30% 26% at 10% 92%, var(--blob-4), transparent 72%),
-        radial-gradient(28% 24% at 50% 46%, var(--blob-5), transparent 72%),
-        radial-gradient(26% 22% at 70% 40%, var(--blob-6), transparent 72%),
-        var(--bg);
-      opacity: .75;
-    }
-    main { max-width: 960px; margin: 0 auto; }
 
-    .hero {
-      text-align: center; padding: 34px 22px 30px; margin-bottom: 28px;
-      background: var(--glass); border: 1px solid var(--edge); border-radius: 30px;
-      box-shadow: var(--shine), var(--shadow);
-      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    /* Bakgrund: papperskorn och ljuset från ett välvt kyrkfönster med korsformad spröjs */
+    .scene { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+    .window {
+      position: absolute; left: 50%; top: -4vh; width: min(84vw, 520px); height: 104vh; translate: -50% 0;
+      fill: var(--light); filter: blur(7px); transform: skewX(-7deg); transform-origin: top;
+      opacity: var(--window); animation: appear-window 4s var(--ease) .1s backwards;
     }
-    .logo {
-      width: 72px; height: 72px; margin: 0 auto 14px; border-radius: 22px; display: grid; place-items: center;
-      background: linear-gradient(145deg, #050708, #13292b); color: #d9fbff;
-      box-shadow: 0 8px 26px rgba(63, 184, 240, .4), 0 0 0 1px rgba(255, 255, 255, .08), inset 0 1px 0 rgba(255, 255, 255, .25);
+    .grain {
+      position: absolute; inset: 0; opacity: var(--grain-opacity);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-    .logo svg { width: 38px; height: 38px; filter: drop-shadow(0 0 6px rgba(143, 224, 255, .7)); }
+    @keyframes appear-window { from { opacity: 0; } }
+
+    main { max-width: 640px; margin: 0 auto; }
+
+    /* Långsam intoning när sidan öppnas. --d styr ordningen. */
+    .in { opacity: 0; translate: 0 14px; animation: rise 1.6s var(--ease) var(--d, 0s) forwards; }
+    @keyframes rise { to { opacity: 1; translate: 0 0; } }
+
+    header { text-align: center; margin-bottom: 7vh; }
+    .cross { width: 58px; height: 72px; filter: url(#ink); margin: 0 auto 26px; display: block; color: var(--ink); overflow: visible; }
+    .cross path { fill: none; stroke: currentColor; stroke-width: 4.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; animation: draw 1.8s var(--ease) forwards; }
+    .cross path + path { animation-delay: .7s; animation-duration: 1.2s; }
+    @keyframes draw { from { stroke-dashoffset: 1; opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
+
     h1 {
-      margin: 0 0 10px; font-size: clamp(2.2rem, 7vw, 3.4rem); font-weight: 900; letter-spacing: -.035em; line-height: 1.05;
-      text-wrap: balance;
+      margin: 0; font-weight: 560; font-size: clamp(2.6rem, 9vw, 4.2rem); line-height: 1; letter-spacing: -.02em;
+      font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
     }
-    h1 span { background: linear-gradient(110deg, var(--ocean), var(--turq) 45%, var(--mint)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .rainbow { height: 4px; width: 120px; margin: 18px auto 0; border-radius: 4px; background: linear-gradient(90deg, var(--violet), var(--ocean), var(--ice), var(--turq), var(--mint)); box-shadow: 0 2px 10px rgba(16, 196, 196, .4); }
-    .lead { margin: 0 auto; max-width: 44ch; font-size: 1.08rem; line-height: 1.5; color: var(--muted); text-wrap: balance; }
+    h1 .mark { position: relative; display: inline-block; }
+    h1 .mark svg { position: absolute; left: -4%; bottom: -.22em; width: 108%; height: .32em; overflow: visible; color: var(--accent); }
+    h1 .mark path { fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; animation: draw 1.4s var(--ease) 1.5s forwards; }
+    .lead { margin: 30px auto 0; max-width: 34ch; color: var(--muted); font-size: 1.12rem; text-wrap: balance; }
 
-    .section-title { margin: 0 6px 12px; font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; color: var(--muted); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-
-    .tool {
-      position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 10px; padding: 22px; min-height: 200px;
-      background: var(--glass); border: 1px solid var(--edge); border-radius: 26px; color: inherit; text-decoration: none;
+    /* Verktygen ligger på en enda glasruta */
+    .pane {
+      position: relative; padding: 8px;
+      background: var(--glass); border: 1px solid var(--edge);
+      border-radius: 30px 26px 32px 24px / 26px 32px 24px 30px;
       box-shadow: var(--shine), var(--shadow);
-      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
-      transition: transform .2s, box-shadow .2s;
+      -webkit-backdrop-filter: blur(20px) saturate(140%); backdrop-filter: blur(20px) saturate(140%);
     }
-    a.tool:hover, a.tool:focus-visible { transform: translateY(-3px); box-shadow: var(--shine), 0 18px 48px color-mix(in srgb, var(--c1) 35%, transparent); outline: none; }
-    a.tool:focus-visible { box-shadow: 0 0 0 3px var(--turq), var(--shadow); }
-    a.tool:active { transform: scale(.98); }
-    .tool { --c1: var(--turq); --c2: var(--ocean); }
-    .tool .icon {
-      width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
-      background: linear-gradient(145deg, var(--c1), var(--c2)); color: #050708;
-      box-shadow: 0 6px 18px color-mix(in srgb, var(--c1) 45%, transparent), inset 0 1px 0 rgba(255, 255, 255, .55);
+    .pane::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1px;
+      background: linear-gradient(150deg, rgba(255, 255, 255, .95), transparent 30%, transparent 70%, rgba(255, 255, 255, .5));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: var(--rim, 1);
     }
-    .tool::before {
-      content: ""; position: absolute; inset: 0 0 auto; height: 4px;
-      background: linear-gradient(90deg, var(--c1), var(--c2)); opacity: .9;
+    .tool {
+      position: relative; display: grid; grid-template-columns: 34px 1fr auto; align-items: start; gap: 4px 18px;
+      padding: 20px 20px; color: inherit; text-decoration: none; outline: none;
+      border-radius: 22px 17px 24px 16px / 17px 24px 16px 22px;
     }
-    .tool .icon svg { width: 28px; height: 28px; fill: currentColor; }
-    .tool h2 { margin: 4px 0 0; font-size: 1.3rem; letter-spacing: -.01em; }
-    .tool p { margin: 0; color: var(--muted); line-height: 1.45; flex: 1; }
-    .tool .go {
-      align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; padding: 9px 16px; border-radius: 999px;
-      background: #050708; color: #fff; font-weight: 700; font-size: .92rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
+    .tool + .tool::before {
+      content: ""; position: absolute; left: 20px; right: 20px; top: 0; height: 6px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 6' preserveAspectRatio='none'%3E%3Cpath d='M1 3.5C60 2 110 4.6 170 3.2S300 2.2 399 3.8' fill='none' stroke='%23000' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+      opacity: .16; translate: 0 -3px;
     }
-    @media (prefers-color-scheme: dark) { .tool .go { background: var(--turq); color: #050708; } }
-    .tool .go svg { width: 16px; height: 16px; fill: currentColor; }
-    .tool.soon { border-style: dashed; box-shadow: var(--shine); }
-    .tool.soon .icon { background: color-mix(in srgb, var(--c1) 16%, transparent); color: var(--c1); box-shadow: none; }
-    .tool.soon::before { opacity: .5; }
-    .tool .badge {
-      position: absolute; top: 18px; right: 18px; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em;
-      padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--c1) 16%, transparent); color: var(--c1); border: 1px solid var(--edge);
+    @media (prefers-color-scheme: dark) { .tool + .tool::before { filter: invert(1); opacity: .2; } }
+    .tool .icon { grid-row: span 2; width: 30px; height: 30px; margin-top: 3px; fill: currentColor; color: var(--c1, var(--accent)); filter: url(#ink); }
+    .tool h2 { margin: 0; font-size: 1.45rem; font-weight: 560; letter-spacing: -.01em; line-height: 1.2; font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 72; }
+    .tool p { grid-column: 2; margin: 0; color: var(--muted); }
+    .tool .go { grid-row: 1 / span 2; grid-column: 3; align-self: center; width: 26px; height: 26px; color: var(--accent); transition: translate .5s var(--ease); }
+    .tool .go path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    a.tool:hover .go, a.tool:focus-visible .go { translate: 5px 0; }
+    a.tool { transition: background-color .4s var(--ease); }
+    a.tool:hover, a.tool:active { background-color: var(--accent-soft); }
+    a.tool:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+    .tool.soon { color: var(--muted); }
+    .tool.soon .icon { color: var(--muted); opacity: .6; }
+    .tool.soon h2 { font-size: 1.2rem; }
+    .tool .note { grid-column: 3; grid-row: 1; font: 600 1.25rem/1 var(--hand); color: var(--accent); rotate: -4deg; white-space: nowrap; }
+
+    .verse { margin: 9vh auto 0; max-width: 30ch; text-align: center; font: 500 1.6rem/1.2 var(--hand); color: var(--ink); text-wrap: balance; }
+    .verse cite { display: block; margin-top: 8px; font: 400 .85rem/1 var(--serif); font-style: normal; color: var(--muted); letter-spacing: .02em; }
+    footer { margin-top: 40px; text-align: center; font-size: .9rem; color: var(--muted); }
+    footer a { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
+
+    @media (max-width: 480px) {
+      .tool { padding: 18px 14px; gap: 4px 14px; grid-template-columns: 28px 1fr auto; }
+      .tool + .tool::before { left: 14px; right: 14px; }
+      .tool p { grid-column: 2 / 4; }
+      .tool .go { grid-row: 1; width: 22px; height: 22px; }
+      .tool .note { font-size: 1.1rem; }
     }
-    footer { text-align: center; margin-top: 34px; font-size: .85rem; color: var(--muted); }
-    @media (prefers-reduced-motion: reduce) { .tool { transition: none; } }
+    @media (hover: none) { a.tool:hover .go { translate: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01s !important; animation-delay: 0s !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
+  <div class="scene" aria-hidden="true">
+    <svg class="window" viewBox="0 0 200 400" preserveAspectRatio="none">
+      <path d="M16 104A84 84 0 0 1 93 17V150H16ZM107 17A84 84 0 0 1 184 104V150H107ZM16 164H93V384H16ZM107 164H184V384H107Z"/>
+    </svg>
+    <div class="grain"></div>
+  </div>
+
+  <!-- Ojämn bläckkant för ikonerna -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+  </svg>
+
   <main>
-    <header class="hero">
-      <div class="logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.5 2h3v5.5H19v3h-5.5V22h-3V10.5H5v-3h5.5z"/></svg>
-      </div>
-      <h1><span>Donsö</span> Källarn</h1>
-      <p class="lead">Här finns flera verktyg som kan användas för aktiviteter på källarn.</p>
-      <div class="rainbow" aria-hidden="true"></div>
+    <header>
+      <svg class="cross" viewBox="0 0 54 66" aria-hidden="true">
+        <path pathLength="1" d="M27.6 3C26.4 18 27.9 40 26.8 63"/>
+        <path pathLength="1" d="M8 21.5C17 20.2 31 22.4 46.5 20.6"/>
+      </svg>
+      <h1 class="in" style="--d:.3s">Donsö <span class="mark">Källarn<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8.5C38 4 92 3 140 5.2S186 9 197 5"/></svg></span></h1>
+      <p class="lead in" style="--d:.9s">Här finns flera verktyg som kan användas för aktiviteter på källarn.</p>
     </header>
 
-    <div class="section-title">Verktyg</div>
-    <div class="grid" id="tools"></div>
+    <nav class="pane in" style="--d:1.4s" id="tools" aria-label="Verktyg"></nav>
 
-    <footer>Donsö Källarn · donsokallarn.se</footer>
+    <p class="verse in" style="--d:2.4s">Ta emot varandra så som Kristus har tagit emot er.<cite>Romarbrevet 15:7</cite></p>
+    <footer class="in" style="--d:2.8s"><a href="https://donsokallarn.se">donsokallarn.se</a></footer>
   </main>
 
   <script>
     // Lägg till ett nytt verktyg genom att lägga till en rad här.
     // url: null betyder att verktyget visas som "Kommer snart".
+    // colors[0] blir färgen på ikonen.
     const TOOLS = [
       {
         name: 'Turneringsskapare',
         text: 'Skapa turneringar med gruppspel, slutspelsträd och poängtabeller. Mata in resultat och följ spelarstatistik.',
         url: 'https://turnering.donsokallarn.se',
-        colors: ['var(--turq)', 'var(--ocean)'],
+        colors: ['var(--accent)', 'var(--accent)'],
         icon: 'M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z',
       },
-      { name: 'Kommer snart', text: 'Ett nytt verktyg för aktiviteter på källarn är på väg.', url: null, colors: ['var(--mint)', 'var(--turq)'] },
-      { name: 'Kommer snart', text: 'Fler verktyg läggs till här efter hand.', url: null, colors: ['var(--violet)', 'var(--ice)'] },
+      { name: 'Kommer snart', text: 'Ett nytt verktyg för aktiviteter på källarn är på väg.', url: null },
+      { name: 'Kommer snart', text: 'Fler verktyg läggs till här efter hand.', url: null },
     ];
 
     const SOON_ICON = 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z';
-    const ARROW = 'M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z';
+    const ARROW = '<svg class="go" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 13.4c6-.5 13-.2 19.5-.4M15.5 6.5c2.3 2.4 4.6 4.6 6.6 6.4-2.2 2-4.4 4.1-6.4 6.6"/></svg>';
     const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    const svg = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+    const icon = (d) => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
 
-    const colorStyle = (t) => (t.colors ? ` style="--c1:${t.colors[0]};--c2:${t.colors[1]}"` : '');
+    const colorStyle = (t) => (t.colors ? ` style="--c1:${esc(t.colors[0])}"` : '');
     document.getElementById('tools').innerHTML = TOOLS.map((t) =>
       t.url
-        ? `<a class="tool"${colorStyle(t)} href="${esc(t.url)}"><span class="icon">${svg(t.icon)}</span><h2>${esc(t.name)}</h2><p>${esc(t.text)}</p><span class="go">Öppna ${svg(ARROW)}</span></a>`
-        : `<div class="tool soon"${colorStyle(t)} aria-disabled="true"><span class="badge">Snart</span><span class="icon">${svg(SOON_ICON)}</span><h2>${esc(t.name)}</h2><p>${esc(t.text)}</p></div>`
+        ? `<a class="tool"${colorStyle(t)} href="${esc(t.url)}">${icon(t.icon)}<h2>${esc(t.name)}</h2><p>${esc(t.text)}</p>${ARROW}</a>`
+        : `<div class="tool soon" aria-disabled="true">${icon(SOON_ICON)}<h2>${esc(t.name)}</h2><p>${esc(t.text)}</p><span class="note">snart!</span></div>`
     ).join('');
   </script>
   <noscript><p style="text-align:center"><a href="https://turnering.donsokallarn.se">Turneringsskapare</a></p></noscript>
